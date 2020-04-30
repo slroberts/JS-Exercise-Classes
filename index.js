@@ -75,7 +75,30 @@ class Person {
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-class Car {}
+class Car {
+  constructor(model, milesPerGallon) {
+    this.model = model;
+    this.milesPerGallon = milesPerGallon;
+    this.tank = 0;
+    this.odometer = 0;
+  }
+
+  fill(gallons) {
+    this.tank += gallons;
+  }
+
+  drive(distance) {
+    this.odometer += distance;
+    const usedFuel = distance / this.milesPerGallon;
+    this.tank -= usedFuel;
+
+    if (this.tank < usedFuel) {
+      this.odometer += this.tank * this.milesPerGallon;
+      this.tank = 0;
+      return `I ran out of Fuel at ${this.odometer} miles!`;
+    }
+  }
+}
 
 /*
   TASK 3
@@ -89,7 +112,17 @@ class Car {}
         + Speaking should return a phrase `Hello my name is {name}, I am from {location}`.
         + {name} and {location} of course come from the instance's own properties.
 */
-class Lambdasian {}
+class Lambdasian {
+  constructor(obj) {
+    this.name = obj.name;
+    this.age = obj.age;
+    this.location = obj.location;
+  }
+
+  speak() {
+    return `Hello my name is ${this.name}, I am ${this.location}.`;
+  }
+}
 
 /*
   TASK 4
@@ -105,7 +138,22 @@ class Lambdasian {}
         + `demo` receives a `subject` string as an argument and returns the phrase 'Today we are learning about {subject}' where subject is the param passed in.
         + `grade` receives a `student` object and a `subject` string as arguments and returns '{student.name} receives a perfect score on {subject}'
 */
-class Instructor {}
+class Instructor extends Lambdasian {
+  constructor(obj) {
+    super(obj);
+    this.specialty = obj.specialty;
+    this.favLanguage = obj.favLanguage;
+    this.catchPhrase = obj.catchPhrase;
+  }
+
+  demo(subject) {
+    return `Today we are learning about ${subject}`;
+  }
+
+  grade(studentObj, subject) {
+    return `${studentObj.name} receives a perfect score on ${subject}`;
+  }
+}
 
 /*
   TASK 5
@@ -122,7 +170,26 @@ class Instructor {}
         + `PRAssignment` a method that receives a subject as an argument and returns `student.name has submitted a PR for {subject}`
         + `sprintChallenge` similar to PRAssignment but returns `student.name has begun sprint challenge on {subject}`
 */
-class Student {}
+class Student extends Lambdasian {
+  constructor(obj) {
+    super(obj);
+    this.previousBackground = obj.previousBackground;
+    this.className = obj.className;
+    this.favSubjects = obj.favSubjects;
+  }
+
+  listSubjects() {
+    return `${this.favSubjects}`;
+  }
+
+  PRAssignment(subject) {
+    return `${this.name} has submitted a PR for ${subject}`;
+  }
+
+  sprintChallenge(subject) {
+    return `${this.name} has begun sprint challenge on ${subject}`;
+  }
+}
 
 /*
   TASK 6
@@ -137,7 +204,21 @@ class Student {}
         + `standUp` a method that takes in a slack channel and returns `{name} announces to {channel}, @channel standy times!`
         + `debugsCode` a method that takes in a student object and a subject and returns `{name} debugs {student.name}'s code on {subject}`
 */
-class ProjectManager {}
+class ProjectManager extends Instructor {
+  constructor(obj) {
+    super(obj);
+    this.gradClassName = obj.gradClassName;
+    this.favInstructor = obj.favInstructor;
+  }
+
+  standUp(channel) {
+    return `${this.name} announces to ${channel}, @${channel} standy times! `;
+  }
+
+  debugsCode(studentObj, subject) {
+    return `${this.name} debugs ${studentObj.name}'s code on ${subject}`;
+  }
+}
 
 /*
   STRETCH PROBLEM (no tests!)
@@ -147,6 +228,15 @@ class ProjectManager {}
       + This method, when called, will check the grade of the student and see if they're ready to graduate from Lambda School
       + If the student's grade is above a 70% let them graduate! Otherwise go back to grading their assignments to increase their score.
 */
+
+// class StudentExtra extends Student {
+//   constructor(obj) {
+//     super(obj);
+//     this.grade = function randomGrade() {
+//       return Math.random() * (100 - 1) + 1;
+//     };
+//   }
+// }
 
 ///////// END OF CHALLENGE /////////
 ///////// END OF CHALLENGE /////////
